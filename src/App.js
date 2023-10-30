@@ -87,6 +87,10 @@ function App() {
     });
   };
 
+  const sumAmount = expenses.reduce((acc, cur) => {
+    return (acc += cur.amount);
+  }, 0);
+
   return (
     <div className="App">
       {alert.show ? <Alert type={alert.type} text={alert.text} /> : null}
@@ -113,7 +117,7 @@ function App() {
 
         <div className="total-price-container">
           <p className="total-price">
-            총지출: <span>원</span>
+            총지출: <span>{sumAmount}원</span>
           </p>
         </div>
       </main>
