@@ -2,7 +2,7 @@ import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 import "./assets/css/App.css";
 import { useState } from "react";
-import Alert from "../README/Alert";
+import Alert from "./components/Alert";
 
 function App() {
   const [expenses, setExpenses] = useState([
@@ -12,6 +12,12 @@ function App() {
   ]);
   const [charge, setCharge] = useState("");
   const [amount, setAmount] = useState(0);
+  const [alert, setAlert] = useState({ show: false });
+
+  const alertHandler = ({ type, text }) => {
+    setAlert({ show: true, type, text });
+    setTimeout(() => setAlert({ show: false }), 7000);
+  };
 
   const chargeOnChangeHandler = (e) => {
     const { value } = e.target;
@@ -27,15 +33,28 @@ function App() {
     e.preventDefault();
 
     if (charge === "" || amount <= 0) {
+      alertHandler({
+        type: "danger",
+        text: "charge는 빈 값일 수 없으며 amount는 0보다 커야 합니다.",
+      });
     } else {
       // expense 생성
       const newExpense = { id: crypto.randomUUID(), charge, amount };
       const newExpenses = [...expenses, newExpense];
       setExpenses(newExpenses);
-
       setCharge("");
       setAmount(0);
+      alertHandler({ type: "success", text: "아이템이 생성되었습니다." });
     }
+  };
+
+  const expenseDeleteHandler = (id) => {
+    const newExpenses = expenses.filter((expense) => expense.id !== id);
+    setExpenses(newExpenses);
+    alertHandler({
+      type: "danger",
+      text: "아이템이 삭제되었습니다.",
+    });
   };
 
   return (
@@ -54,7 +73,10 @@ function App() {
         </section>
 
         <section>
-          <ExpenseList expenses={expenses} />
+          <ExpenseList
+            expenses={expenses}
+            expenseDeleteHandler={expenseDeleteHandler}
+          />
         </section>
 
         <div className="total-price-container">
