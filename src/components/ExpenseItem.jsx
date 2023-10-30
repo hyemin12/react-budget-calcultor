@@ -2,7 +2,7 @@ import { MdDelete, MdEdit } from "react-icons/md";
 import "../assets/css/ExpenseItem.css";
 
 const ExpenseItem = (props) => {
-  const { id, charge, amount } = props;
+  const { id, charge, amount, expenseDeleteHandler } = props;
 
   return (
     <li className="item">
@@ -11,10 +11,10 @@ const ExpenseItem = (props) => {
         <span className="amount">{amount}원</span>
       </div>
       <div>
-        <button className="edit-btn" o>
+        <button className="edit-btn">
           <MdEdit />
         </button>
-        <button className="clear-btn">
+        <button className="clear-btn" onClick={() => expenseDeleteHandler(id)}>
           <MdDelete />
         </button>
       </div>
