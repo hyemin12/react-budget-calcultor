@@ -30,6 +30,7 @@ const ExpenseForm = ({
           placeholder={"예) 1000"}
         />
       </div>
+
       <button type="submit" className="btn">
         {edit ? "수정" : "제출"} <MdSend className="btn-icon" />
       </button>

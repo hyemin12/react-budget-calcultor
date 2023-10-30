@@ -79,6 +79,14 @@ function App() {
     });
   };
 
+  const allExpenseDeleteHandler = () => {
+    setExpenses([]);
+    alertHandler({
+      type: "danger",
+      text: "아이템 전체가 삭제되었습니다.",
+    });
+  };
+
   return (
     <div className="App">
       {alert.show ? <Alert type={alert.type} text={alert.text} /> : null}
@@ -99,6 +107,7 @@ function App() {
             expenses={expenses}
             expenseDeleteHandler={expenseDeleteHandler}
             expenseEditHandler={expenseEditHandler}
+            allExpenseDeleteHandler={allExpenseDeleteHandler}
           />
         </section>
 

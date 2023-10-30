@@ -6,6 +6,7 @@ const ExpenseList = ({
   expenses,
   expenseDeleteHandler,
   expenseEditHandler,
+  allExpenseDeleteHandler,
 }) => {
   return (
     <>
@@ -23,9 +24,11 @@ const ExpenseList = ({
           ))
         )}
       </ul>
-      <button className="btn">
-        목록 지우기 <MdDelete className="btn-icon" />
-      </button>
+      {expenses.length > 0 ? (
+        <button className="btn" onClick={allExpenseDeleteHandler}>
+          목록 지우기 <MdDelete className="btn-icon" />
+        </button>
+      ) : null}
     </>
   );
 };
