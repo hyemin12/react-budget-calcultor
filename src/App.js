@@ -1,7 +1,7 @@
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 import "./assets/css/App.css";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import Alert from "./components/Alert";
 
 function App() {
@@ -21,24 +21,27 @@ function App() {
     setTimeout(() => setAlert({ show: false }), 7000);
   };
 
-  const chargeOnChangeHandler = (e) => {
+  const chargeOnChangeHandler = useCallback((e) => {
     const { value } = e.target;
     setCharge(value);
-  };
+  }, []);
 
   const amountOnChangeHanlder = (e) => {
     const { valueAsNumber } = e.target;
     setAmount(valueAsNumber);
   };
 
-  const expenseEditHandler = (id) => {
-    const expense = expenses.find((item) => item.id === id);
-    const { charge, amount } = expense;
-    setId(id);
-    setCharge(charge);
-    setAmount(amount);
-    setEdit(true);
-  };
+  const expenseEditHandler = useCallback(
+    (id) => {
+      const expense = expenses.find((item) => item.id === id);
+      const { charge, amount } = expense;
+      setId(id);
+      setCharge(charge);
+      setAmount(amount);
+      setEdit(true);
+    },
+    [expenses]
+  );
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -70,26 +73,33 @@ function App() {
     }
   };
 
-  const expenseDeleteHandler = (id) => {
-    const newExpenses = expenses.filter((expense) => expense.id !== id);
-    setExpenses(newExpenses);
-    alertHandler({
-      type: "danger",
-      text: "아이템이 삭제되었습니다.",
-    });
-  };
+  const expenseDeleteHandler = useCallback(
+    (id) => {
+      const newExpenses = expenses.filter((expense) => expense.id !== id);
+      setExpenses(newExpenses);
+      alertHandler({
+        type: "danger",
+        text: "아이템이 삭제되었습니다.",
+      });
+    },
+    [expenses]
+  );
 
-  const allExpenseDeleteHandler = () => {
+  const allExpenseDeleteHandler = useCallback(() => {
     setExpenses([]);
     alertHandler({
       type: "danger",
       text: "아이템 전체가 삭제되었습니다.",
     });
-  };
+  }, []);
 
-  const sumAmount = expenses.reduce((acc, cur) => {
-    return (acc += cur.amount);
-  }, 0);
+  const sumAmount = useMemo(
+    () =>
+      expenses.reduce((acc, cur) => {
+        return (acc += cur.amount);
+      }, 0),
+    [expenses]
+  );
 
   return (
     <div className="App">

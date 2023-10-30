@@ -1,3 +1,4 @@
+import React from "react";
 import { MdDelete, MdEdit } from "react-icons/md";
 import "../assets/css/ExpenseItem.css";
 
@@ -22,4 +23,4 @@ const ExpenseItem = (props) => {
     </li>
   );
 };
-export default ExpenseItem;
+export default React.memo(ExpenseItem);
