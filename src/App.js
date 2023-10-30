@@ -13,6 +13,8 @@ function App() {
   const [charge, setCharge] = useState("");
   const [amount, setAmount] = useState(0);
   const [alert, setAlert] = useState({ show: false });
+  const [edit, setEdit] = useState(false);
+  const [id, setId] = useState();
 
   const alertHandler = ({ type, text }) => {
     setAlert({ show: true, type, text });
@@ -29,6 +31,15 @@ function App() {
     setAmount(valueAsNumber);
   };
 
+  const expenseEditHandler = (id) => {
+    const expense = expenses.find((item) => item.id === id);
+    const { charge, amount } = expense;
+    setId(id);
+    setCharge(charge);
+    setAmount(amount);
+    setEdit(true);
+  };
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -38,13 +49,24 @@ function App() {
         text: "charge는 빈 값일 수 없으며 amount는 0보다 커야 합니다.",
       });
     } else {
-      // expense 생성
-      const newExpense = { id: crypto.randomUUID(), charge, amount };
-      const newExpenses = [...expenses, newExpense];
-      setExpenses(newExpenses);
+      if (edit) {
+        // expense 수정
+        const newExpenses = expenses.map((expenses) =>
+          expenses.id === id ? { ...expenses, charge, amount } : expenses
+        );
+        setExpenses(newExpenses);
+        setEdit(false);
+        alertHandler({ type: "success", text: "아이템이 수정되었습니다." });
+      } else {
+        // expense 생성
+        const newExpense = { id: crypto.randomUUID(), charge, amount };
+        const newExpenses = [...expenses, newExpense];
+        setExpenses(newExpenses);
+
+        alertHandler({ type: "success", text: "아이템이 생성되었습니다." });
+      }
       setCharge("");
       setAmount(0);
-      alertHandler({ type: "success", text: "아이템이 생성되었습니다." });
     }
   };
 
@@ -76,6 +98,7 @@ function App() {
           <ExpenseList
             expenses={expenses}
             expenseDeleteHandler={expenseDeleteHandler}
+            expenseEditHandler={expenseEditHandler}
           />
         </section>
 

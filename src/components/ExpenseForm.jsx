@@ -3,6 +3,7 @@ import { MdSend } from "react-icons/md";
 import "../assets/css/ExpenseForm.css";
 
 const ExpenseForm = ({
+  edit,
   amount,
   charge,
   chargeOnChangeHandler,
@@ -30,7 +31,7 @@ const ExpenseForm = ({
         />
       </div>
       <button type="submit" className="btn">
-        "제출" <MdSend className="btn-icon" />
+        {edit ? "수정" : "제출"} <MdSend className="btn-icon" />
       </button>
     </form>
   );
