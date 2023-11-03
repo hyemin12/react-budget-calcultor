@@ -1,10 +1,10 @@
 
 
-<a href="https://hyemin12.github.io/react-budget-calcultor/" target="_blank">
-![사이트 이미지](https://github.com/hyemin12/hyemin12/assets/66300732/cb61c489-0a40-466b-8ae1-ba0c940f6e7e)]
-</a>
 
-이미지를 클릭하면 사이트로 이동합니다.
+![사이트 이미지](https://github.com/hyemin12/hyemin12/assets/66300732/cb61c489-0a40-466b-8ae1-ba0c940f6e7e)]
+
+
+<a href="https://hyemin12.github.io/react-budget-calcultor/" target="_blank">사이트</a>로 이동합니다.
 
 ### 개발 서버
 
